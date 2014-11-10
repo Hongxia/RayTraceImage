@@ -1,0 +1,52 @@
+﻿Build started 11/3/2014 9:03:07 PM.
+     1>Project "C:\Data\boolzhu\PhysBAM_svn\trunk\Courses\2014\cs148\RayTracer-SampleCode1.2\libst\vc2008\libst.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Release\libst.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I../include /I../ext/libpng/include /I../ext/libjpeg/include /I../ext/zlib/include/ /I../ext/freetype/include /I../ext/glew/include /Zi /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D NDEBUG /D _LIB /D _CRT_SECURE_NO_WARNINGS /D _CRT_SECURE_NO_DEPRECATE /D _MBCS /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\STColor3f.cpp ..\STColor4f.cpp ..\STColor4ub.cpp ..\STImage.cpp ..\STImage_jpeg.cpp ..\STImage_png.cpp ..\STImage_ppm.cpp ..\STPoint2.cpp ..\STPoint3.cpp ..\STShaderProgram.cpp ..\STTexture.cpp ..\STTimer.cpp ..\STTransform4.cpp ..\STTriangleMesh.cpp ..\STVector2.cpp ..\STVector3.cpp ..\tiny_obj_loader.cpp
+         STColor3f.cpp
+         STColor4f.cpp
+         STColor4ub.cpp
+         STImage.cpp
+         STImage_jpeg.cpp
+         STImage_png.cpp
+         STImage_ppm.cpp
+         STPoint2.cpp
+         STPoint3.cpp
+         STShaderProgram.cpp
+         STTexture.cpp
+         STTimer.cpp
+         STTransform4.cpp
+         STTriangleMesh.cpp
+         STVector2.cpp
+         STVector3.cpp
+         tiny_obj_loader.cpp
+         Generating Code...
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(1151,5): warning MSB8012: TargetPath(C:\Data\boolzhu\PhysBAM_svn\trunk\Courses\2014\cs148\RayTracer-SampleCode1.2\libst\vc2008\../lib\libst.lib) does not match the Library's OutputFile property value (C:\Data\boolzhu\PhysBAM_svn\trunk\Courses\2014\cs148\RayTracer-SampleCode1.2\libst\lib\Release\libst.lib). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+       Lib:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"../lib\Release/libst.lib" /NOLOGO Release\STColor3f.obj
+         Release\STColor4f.obj
+         Release\STColor4ub.obj
+         Release\STImage.obj
+         Release\STImage_jpeg.obj
+         Release\STImage_png.obj
+         Release\STImage_ppm.obj
+         Release\STPoint2.obj
+         Release\STPoint3.obj
+         Release\STShaderProgram.obj
+         Release\STTexture.obj
+         Release\STTimer.obj
+         Release\STTransform4.obj
+         Release\STTriangleMesh.obj
+         Release\STVector2.obj
+         Release\STVector3.obj
+         Release\tiny_obj_loader.obj
+         libst.vcxproj -> C:\Data\boolzhu\PhysBAM_svn\trunk\Courses\2014\cs148\RayTracer-SampleCode1.2\libst\vc2008\../lib\libst.lib
+       FinalizeBuildStatus:
+         Deleting file "Release\libst.unsuccessfulbuild".
+         Touching "Release\libst.lastbuildstate".
+     1>Done Building Project "C:\Data\boolzhu\PhysBAM_svn\trunk\Courses\2014\cs148\RayTracer-SampleCode1.2\libst\vc2008\libst.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:07.38

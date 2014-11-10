@@ -1,0 +1,81 @@
+Camera   4 6 7   0 0 1   0 0 2.2   53   1.6
+Output   640 400   ../Standard_Tests/CornellBox7.png
+BounceDepth   3
+ShadowBias 0.005
+
+AmbientLight   .2 .2 .2
+PointLight   7 5 7   .8 .8 .8
+PushMatrix
+Translate 7 5 7
+#AreaLight   2 2 0   -2 2 0   2 -2 0  .8 .8 .8
+PopMatrix
+
+PushMatrix
+Translate 0 0 10
+
+Material   .9 .9 .9   .9 .9 .9   .1 .1 .1   0 0 0    80
+PushMatrix
+Rotate 0 0 0
+Triangle   10 10 -10   -10 10 -10   10 -10 -10
+Triangle   10 -10 -10   -10 10 -10    -10 -10 -10
+PopMatrix
+PushMatrix
+Rotate 180 0 0
+Triangle   10 10 -10   -10 10 -10   10 -10 -10
+Triangle   10 -10 -10   -10 10 -10    -10 -10 -10
+PopMatrix
+PushMatrix
+Rotate 90 0 0
+Triangle   10 10 -10   -10 10 -10   10 -10 -10
+Triangle   10 -10 -10   -10 10 -10    -10 -10 -10
+PopMatrix
+PushMatrix
+Rotate -90 0 0
+Triangle   10 10 -10   -10 10 -10   10 -10 -10
+Triangle   10 -10 -10   -10 10 -10    -10 -10 -10
+PopMatrix
+PushMatrix
+Rotate 0 90 0
+Triangle   10 10 -10   -10 10 -10   10 -10 -10
+Triangle   10 -10 -10   -10 10 -10    -10 -10 -10
+PopMatrix
+PushMatrix
+Rotate 0 -90 0
+Triangle   10 10 -10   -10 10 -10   10 -10 -10
+Triangle   10 -10 -10   -10 10 -10    -10 -10 -10
+PopMatrix
+
+PopMatrix
+
+Material   .4 .1 0   .4 .1 0   .2 .2 .2   0 0 0   30
+Material   .6  .4 .1    .6  .4 .1   .2 .2 .2   .6  .4 .1   90
+PushMatrix
+Translate   0 0 3.22
+Scale 1 1 .8
+Cylinder 0 0 0   0 0 .2   .6
+Sphere   0 0 1   1
+Sphere   0 0 1.5   1
+Compound d
+
+Box   1 1 0   -1 1 0   1 -1 0   1 1 2
+Group 2
+
+PopMatrix
+
+Material   0 0 0   0 0 0   1 1 1   .1 .1 .1    30
+Cylinder   2 2 0   2 2 3   .15
+Cylinder   -2 2 0   -2 2 3   .15
+Cylinder   2 -2 0   2 -2 3   .15
+Cylinder   -2 -2 0   -2 -2 3   .15
+
+TMaterial   0 0 0   0 0 0   1 1 1   .1 .1 .1    30    .7 1. .9   2.
+PushMatrix
+Translate   -2.5 -2.5 3.01
+Box   0 0 0   5 0 0   0 5 0   0 0 .2
+PopMatrix
+
+Box   3 3 -.1   -3 3 -.1   3 -3 -.1   3 3 3.3
+Group 5
+
+Box   3 3 -.1   -3 3 -.1   3 -3 -.1   3 3 5
+Group 2

@@ -1,0 +1,41 @@
+Camera   0 1.5 0   0 1 0   0 0 -5.5  55   1
+Output   512   512   ../Standard_Tests/DoF.png
+BounceDepth   3
+ShadowBias 0.0001
+Aperture 4
+
+PushMatrix
+Translate 0 -0.5 0
+
+# The floor
+Material   1 1 1   0.4 0.4 0.4   0 0 0   0.9 0.9 0.9   0
+Triangle   -1000 0 -1000   -1000 0 1000   1000 0 1000
+Triangle   1000 0 1000   1000 0 -1000   -1000 0 -1000
+
+PopMatrix
+
+PushMatrix
+Translate -2 4 -3
+AreaLight -.5 -.5 0   .5 -.5 0   -.5 .5 0   .8 .8 .8
+PopMatrix
+
+PushMatrix
+Translate 0 0.5 -5
+
+AmbientLight   .1 .1 .1
+#PointLight   -2 3.5 2   0.8 0.8 0.8
+
+# Reflective ball
+Material   1 0.75 0.75   1 0.75 0.75   1 1 1   0.75 0.75 0.75   50
+Sphere   1 0 -2   1
+
+# Diffuse ball
+Material   0.75 0.75 1   0.75 0.75 1   0 0 0   0 0 0   0
+Sphere   -1 0 0   1
+#Focus   -1 0 0
+
+Material 0 1 0   0 1 0   .3 .3 .3   0 .3 0   50   .95 .98 .95  1.8
+Sphere   .2 -.5 1.2    .5
+Focus    .2 -.5 1.5
+
+PopMatrix
