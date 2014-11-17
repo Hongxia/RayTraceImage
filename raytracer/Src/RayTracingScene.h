@@ -17,6 +17,7 @@ public:
 
     // Assignment 5
     void initializeUniformScene();
+    void initializeClusteredScene();
 
     //void commonly used functions
     void addAreaLight(const STPoint3& min_corner, const STVector2& size, const STColor3f& col, const STColor3f& src_col, bool counterclockwise=true);

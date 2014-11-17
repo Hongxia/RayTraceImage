@@ -15,11 +15,71 @@ inline static STColor3f color_M() {return rgbToColor(124, 20, 77); }
 inline static STColor3f color_N() {return rgbToColor(127, 166, 51); }
 inline static STColor3f color_O() {return rgbToColor(108, 92, 50); }
 
+void RayTracingScene::initializeClusteredScene()
+{
+    rtClear();
+
+    // rtCamera(/*eye*/STPoint3(-5.f,10.f,40.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,8.f,0.f),/*fov*/45.f,/*aspect*/1.f);
+    rtCamera(/*eye*/STPoint3(0.f,50.f,0.f),/*up*/STVector3(0.f,0.f,-1.f),/*lookat*/STPoint3(0.f,0.f,0.f),/*fov*/45.f,/*aspect*/1.f);
+    rtOutput(/*width*/512,/*height*/512,/*path*/"../Standard_Tests/RayTraceClusteredScene.png");
+    rtBounceDepth(1);
+    rtUseShadow(true);
+    rtSetApeture(16);
+    rtShadowBias(1e-4f);
+    rtSampleRate(4);
+
+    rtAmbientLight(STColor3f(.05f,.05f,.05f));
+    rtAreaLight(STPoint3(-15.f, 40.f, -15.f), STPoint3(-5.f, 40.f, -15.f), STPoint3(-15.f, 40.f, -5.f), STColor3f(0.2f,0.2f,0.2f));
+    rtAreaLight(STPoint3(5.f, 40.f, -15.f), STPoint3(15.f, 40.f, -15.f), STPoint3(5.f, 40.f, -5.f), STColor3f(0.2f,0.2f,0.2f));
+    rtAreaLight(STPoint3(-15.f, 40.f, 5.f), STPoint3(-5.f, 40.f, 5.f), STPoint3(-15.f, 40.f, 15.f), STColor3f(0.2f,0.2f,0.2f));
+    rtAreaLight(STPoint3(5.f, 40.f, 5.f), STPoint3(15.f, 40.f, 5.f), STPoint3(5.f, 40.f, 15.f), STColor3f(0.2f,0.2f,0.2f));
+    rtSpotLight(STPoint3(0.f, 40.f, 0.f), STVector3(0.f, -1.f, 0.f), 18, STColor3f(.5f,.5f,.5f));
+
+    ////car mesh
+    rtPushMatrix();
+    rtTranslate(0.f,1.f,10.f);
+    rtRotate(270.f,0.f,338.f);
+    rtScale(10e-4f,10e-4f,10e-4f);
+    rtTriangleMeshWithMaterialAndTexture("../Standard_Tests/turbosonic/turbosonic.obj",true,false);
+    rtPopMatrix();
+
+    rtPushMatrix();
+    rtTranslate(-8.66f,1.f,-5.f);
+    rtRotate(270.f,0.f,218.f);
+    rtScale(10e-4f,10e-4f,10e-4f);
+    rtTriangleMeshWithMaterialAndTexture("../Standard_Tests/turbosonic/turbosonic.obj",true,false);
+    rtPopMatrix();
+
+    rtPushMatrix();
+    rtTranslate(8.66f,1.f,-5.f);
+    rtRotate(270.f,0.f,98.f);
+    rtScale(10e-4f,10e-4f,10e-4f);
+    rtTriangleMeshWithMaterialAndTexture("../Standard_Tests/turbosonic/turbosonic.obj",true,false);
+    rtPopMatrix();
+
+    ////environment box
+    // Material mat_floor(color_O(),color_O(),STColor3f(),STColor3f(),30.f);
+    // ////ground
+    // rtMaterial(mat_floor);
+    // addGround(STPoint3(-20.f, 0.f, -20.f),STVector2(40.f, 40.f),true);
+
+    ////use acceleration structure
+    ////aabb tree
+    // accel_structure=AABB_TREE;
+    // AABBTree* aabb_tree=new AABBTree(objects);
+    // aabb_trees.push_back(aabb_tree);
+
+    ////uniform grid
+    // accel_structure=UNIFORM_GRID;
+    // AABB scene_bounding_box;getObjectsAABB(objects,scene_bounding_box);
+    // int subdivision[3]={3,1,2};
+    // uniform_grid=new UniformGrid(objects,scene_bounding_box,subdivision);
+}
+
 void RayTracingScene::initializeScene()
 {
     rtClear();
 
-    //rtCamera(/*eye*/STPoint3(0.f,10.f,40.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,8.f,0.f),/*fov*/45.f,/*aspect*/1.f);
     rtCamera(/*eye*/STPoint3(-5.f,10.f,40.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,8.f,0.f),/*fov*/45.f,/*aspect*/1.f);
     rtOutput(/*width*/512,/*height*/512,/*path*/"../Standard_Tests/RayTraceScene.png");
     rtBounceDepth(8);

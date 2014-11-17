@@ -66,6 +66,7 @@ int main(int argc, const char * argv[])
 
         //scenes for assignment 5
         scene->initializeUniformScene();
+        // scene->initializeClusteredScene();
 
         clock_t start, end;
         start=clock();
