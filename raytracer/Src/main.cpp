@@ -62,7 +62,10 @@ int main(int argc, const char * argv[])
         RayTracingScene *scene = new RayTracingScene();
 
         ////scenes for assignment 4
-        scene->initializeScene();
+        // scene->initializeScene();
+
+        ////scenes for assignment 5
+        scene->initializeClusteredScene();
         clock_t start, end;
         start=clock();
 
