@@ -128,7 +128,7 @@ void ExampleScene::initializeSceneAccelerationStructureGrid()
 
     ////objects
     int counts[3]={20,20,1};
-    float size[3]={40.f,40.f,4.f};
+    float size[3]={40.f,40.f,2.f};
     STPoint3 min_corner(-size[0]*.5f,-size[1]*.5f,-size[2]*.5f);
     STPoint3 max_corner(size[0]*.5f,size[1]*.5f,size[2]*.5f);
     STVector3 dx(size[0]/(float)counts[0],size[1]/(float)counts[1],size[2]/(float)counts[2]);
@@ -180,7 +180,7 @@ void ExampleScene::initializeSceneAccelerationStructureBVH()
 	rtBounceDepth(1);
 	//rtUseShadow(false);
 	rtShadowBias(1e-4f);
-	//rtSampleRate(4);
+	// rtSampleRate(4);
 
 	////lighting
 	rtAmbientLight(STColor3f(.1f,.1f,.1f));

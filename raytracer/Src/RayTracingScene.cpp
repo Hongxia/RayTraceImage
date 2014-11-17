@@ -26,7 +26,7 @@ void RayTracingScene::initializeScene()
     rtUseShadow(true);
     rtSetApeture(16);
     rtShadowBias(1e-4f);
-    rtSampleRate(8);
+    rtSampleRate(16);
 
     rtAmbientLight(STColor3f(.05f,.05f,.05f));
     rtSpotLight(STPoint3(-6.f, 14.f, 8.f), STVector3(0.6f, -1.f, -0.2f), 20, STColor3f(.5f,.5f,.5f));
@@ -95,6 +95,108 @@ void RayTracingScene::initializeScene()
     rtMaterial(mat_right_wall);
     addWall(STPoint3(10.f,0.f,-10.f),STVector3(0.f,20.f,0.f),STVector3(0.f,0.f,60.f),false);
 }
+
+
+
+void RayTracingScene::initializeUniformScene()
+{
+    rtClear();
+
+
+    // rtCamera(/*eye*/STPoint3(0.f,25.f,10.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,0.f,9.f),/*fov*/45.f,/*aspect*/1.f);
+    rtCamera(/*eye*/STPoint3(0.f,18.f,40.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,0.f,0.f),/*fov*/45.f,/*aspect*/1.f);
+    rtOutput(/*width*/512,/*height*/512,/*path*/"../UniformScene.png");
+    rtBounceDepth(8);
+    rtBounceDepth(8);
+    rtUseShadow(true);
+    rtSetApeture(16);
+    rtShadowBias(1e-4f);
+    rtSampleRate(4);
+
+    rtAmbientLight(STColor3f(.05f,.05f,.05f));
+    rtSpotLight(STPoint3(-6.f, 14.f, 8.f), STVector3(0.4f, -1.f, -0.3f), 25, STColor3f(.5f,.5f,.5f));
+    rtSpotLight(STPoint3(9.f, 12.f, 12.f), STVector3(-0.5f, -1.f, -0.18f), 35, STColor3f(.5f,.5f,.5f));
+    rtSpotLight(STPoint3(9.f, 14.f, 25.0f), STVector3(-0.4f, -1.f, -0.05f), 25, STColor3f(.5f,.5f,.5f));
+    addAreaLight(STPoint3(-5.f,eb(20.f),-5.f), STVector2(10.f, 10.f), STColor3f(.6f,.6f,.6f), STColor3f(1.f,1.f,1.f), true);
+    addAreaLight(STPoint3(-5.f,eb(20.f),15.f), STVector2(10.f, 10.f), STColor3f(.3f,.3f,.3f), STColor3f(1.f,1.f,1.f), true);
+    addAreaLight(STPoint3(-5.f,eb(20.f),35.f), STVector2(10.f, 10.f), STColor3f(.3f,.3f,.3f), STColor3f(1.f,1.f,1.f), true);
+
+    ////environment box
+    Material mat_left_wall(STColor3f(1.f,1.f,1.f),color_J(),STColor3f(),STColor3f(),30.f);
+    Material mat_right_wall(STColor3f(1.f,1.f,1.f),color_L(),STColor3f(),STColor3f(),30.f);
+    Material mat_background_wall(STColor3f(1.f,1.f,1.f),color_I(),STColor3f(),STColor3f(),30.f);
+    Material mat_floor(STColor3f(.89f, .84f, .69f),color_O(),STColor3f(),STColor3f(),30.f);
+    Material mat_white_wall(STColor3f(1.f,1.f,1.f),STColor3f(.8f,.8f,.8f),STColor3f(),STColor3f(),0.f);
+    Material mat_ceiling(STColor3f(0.f,0.f,0.f),STColor3f(.0f,.0f,.0f),STColor3f(),STColor3f(),0.f);
+    ////ground
+    rtMaterial(mat_floor);
+    addGround(STPoint3(-10.f,0.f,-10.f),STVector2(20.f,60.f),true);
+    ////ceil
+    rtMaterial(mat_ceiling);
+    addGround(STPoint3(-10.f,20.f,-10.f),STVector2(20.f,60.f),false);
+    ////background wall
+    rtMaterial(mat_background_wall);
+    addBackgroundWall(STPoint3(-10.f,0.f,-10.f),STVector2(20.f,20.f),true);
+    ////forward wall
+    rtMaterial(mat_background_wall);
+    addBackgroundWall(STPoint3(-10.f,0.f,50.f),STVector2(20.f,20.f),false);
+    ////left wall
+    rtMaterial(mat_left_wall);
+    addWall(STPoint3(-10.f,0.f,-10.f),STVector3(0.f,20.f,0.f),STVector3(0.f,0.f,60.f),true);
+    ////right wall
+    rtMaterial(mat_right_wall);
+    addWall(STPoint3(10.f,0.f,-10.f),STVector3(0.f,20.f,0.f),STVector3(0.f,0.f,60.f),false);
+
+
+
+
+    ////objects
+    int counts[3]={16,1,48};
+    float size[3]={16.f,3.f,48.f};
+    STPoint3 min_corner(-size[0]*.5f,0.0f,-4.0f);
+    STPoint3 max_corner(size[0]*.5f,size[1],size[2] - 4.0f);
+    STVector3 dx(size[0]/(float)counts[0],size[1]/(float)counts[1],size[2]/(float)counts[2]);
+
+    ////spheres and cubes
+    for(int i=0;i<counts[0];i++){
+        for(int j=0;j<counts[1];j++){
+            for(int k=0;k<counts[2];k++){
+                STColor3f color((float)rand()/RAND_MAX,(float)rand()/RAND_MAX,(float)rand()/RAND_MAX);
+                Material mat(color,color,STColor3f(),STColor3f(),40.f);
+                // STVector3 perturb(1,1,1);
+                STVector3 perturb((float)rand()/RAND_MAX,(float)rand()/RAND_MAX,(float)rand()/RAND_MAX);
+                STPoint3 center=min_corner+STVector3(dx.Component(0)*(float)(i+.5f+(perturb.Component(0)-.5f)*.2f),dx.Component(1)*(float)(j+.5f+(perturb.Component(1)-.5f)*.2f),dx.Component(2)*(float)(k+.5f+(perturb.Component(2)-.5f)*.2f));
+                // std::cout << center << std::endl;
+                rtMaterial(mat);
+                int mode=rand()%2;
+                switch(mode){
+                case 0:rtSphere(center,.25f);break;
+                case 1:rtBox(center,STVector3(0.5f));break;
+                }
+            }
+        }
+    }
+
+    
+    // //////uniform grid
+    // accel_structure=UNIFORM_GRID;
+    // AABB scene_bounding_box;getObjectsAABB(objects,scene_bounding_box);
+    // int subdivision[3]={16,10,50};
+    // uniform_grid=new UniformGrid(objects,scene_bounding_box,subdivision);
+
+
+    //use acceleration structure
+    ////aabb tree
+    accel_structure=AABB_TREE;
+    AABBTree* aabb_tree=new AABBTree(objects);
+    aabb_trees.push_back(aabb_tree);
+
+
+}
+
+
+
+
 
 void RayTracingScene::addAreaLight(const STPoint3& min_corner, const STVector2& size, const STColor3f& color, const STColor3f& source_color, bool counterclockwise/*=true*/)
 {
