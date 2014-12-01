@@ -506,9 +506,9 @@ void Scene::rtAmbientLight(const STColor3f& col)
 	lights.push_back(new AmbientLight(col));
 }
 
-void Scene::rtSpotLight(const STPoint3& loc, const STVector3& direction, const double cutoff, const STColor3f& col)
+void Scene::rtSpotLight(const STPoint3& loc, const STVector3& direction, const double cutoff, const STColor3f& col, const double spot_exponent, const double const_atten, const double lin_atten, const double quad_atten)
 {
-    lights.push_back(new SpotLight(matStack.back() * loc, matStack.back() * direction, cutoff, col));
+    lights.push_back(new SpotLight(matStack.back() * loc, matStack.back() * direction, cutoff, col, spot_exponent, const_atten, lin_atten, quad_atten));
 }
 
 void Scene::rtPointLight(const STPoint3& loc, const STColor3f& col)

@@ -10,7 +10,7 @@ using namespace std;
 
 int main(int argc, const char * argv[])
 {
-    bool renderExample = true;
+    bool renderExample = false;
 
     if (renderExample)
     {
@@ -67,8 +67,11 @@ int main(int argc, const char * argv[])
         //scene->initializeScene();
 
         //scenes for assignment 5
-        scene->initializeUniformScene();
-        // scene->initializeClusteredScene();
+        // scene->initializeUniformScene();
+        scene->initializeClusteredScene();
+
+        //scenes for assignment 6
+        // scene->initializeFinalScene();
 
         clock_t start, end;
         start=clock();

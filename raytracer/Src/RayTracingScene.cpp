@@ -15,6 +15,43 @@ inline static STColor3f color_M() {return rgbToColor(124, 20, 77); }
 inline static STColor3f color_N() {return rgbToColor(127, 166, 51); }
 inline static STColor3f color_O() {return rgbToColor(108, 92, 50); }
 
+void RayTracingScene::initializeFinalScene()
+{
+    rtClear();
+
+    // rtCamera(/*eye*/STPoint3(0.f,5.f,20.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,4.f,0.f),/*fov*/45.f,/*aspect*/1.f);
+    rtCamera(/*eye*/STPoint3(-18.f,5.f,16.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,0.f,0.f),/*fov*/45.f,/*aspect*/1.f);
+    rtOutput(/*width*/512,/*height*/512,/*path*/"../Standard_Tests/RayTraceScene.png");
+    rtBounceDepth(2);
+    rtUseShadow(true);
+    rtSetApeture(16);
+    rtShadowBias(1e-4f);
+    rtSampleRate(1);
+
+    rtAmbientLight(STColor3f(1.f,1.f,1.f));
+    rtAreaLight(STPoint3(-10.f, 40.f, -10.f), STPoint3(10.f, 40.f, -10.f), STPoint3(-10.f, 40.f, 10.f), STColor3f(1.f,1.f,1.f));
+    rtSpotLight(STPoint3(0.f, 40.f, 20.f), STVector3(0.f, -1.f, -0.5f), 18, STColor3f(.5f,.5f,.5f), 0.0);
+    rtSpotLight(STPoint3(-16.f, 40.f, -20.f), STVector3(0.f, -1.f, 0.5f), 18, STColor3f(.5f,.5f,.5f), 0.0);
+    rtSpotLight(STPoint3(-40.f, 40.f, 0.f), STVector3(0.6f, -1.f, 0.f), 18, STColor3f(.5f,.5f,.5f), 0.0);
+
+    ////scene mesh
+    rtPushMatrix();
+    rtScale(8.f,8.f,8.f);
+
+    // Ground
+    rtTriangleMeshWithMaterialAndTexture("../Standard_Tests/ground/ground.obj",true,false);
+    rtTriangleMeshWithMotion("../Standard_Tests/ground/car.obj",true,false,0,0,-0.25);
+    rtTriangleMeshWithMaterialAndTexture("../Standard_Tests/ground/car.obj",true,false);
+    rtTriangleMeshWithMotion("../Standard_Tests/ground/car1.obj",true,false,0,0,-0.35);
+    rtTriangleMeshWithMaterialAndTexture("../Standard_Tests/ground/car1.obj",true,false);
+
+    // Water on the ground
+    // Material mat_mirror(STColor3f(1.f, 1.f, 1.f), STColor3f(0.f, 0.f, 0.f), STColor3f(0.f, 0.f, 0.f), STColor3f(.9f, .9f, .9f), 0.f);
+    // rtMaterial(mat_mirror);
+    // rtTriangleMeshWithMaterialAndTexture("../Standard_Tests/ground/water.obj",true,false);
+    rtPopMatrix();
+}
+
 void RayTracingScene::initializeClusteredScene()
 {
     rtClear();
@@ -29,11 +66,11 @@ void RayTracingScene::initializeClusteredScene()
     rtSampleRate(4);
 
     rtAmbientLight(STColor3f(.05f,.05f,.05f));
-    rtAreaLight(STPoint3(-15.f, 40.f, -15.f), STPoint3(-5.f, 40.f, -15.f), STPoint3(-15.f, 40.f, -5.f), STColor3f(0.2f,0.2f,0.2f));
-    rtAreaLight(STPoint3(5.f, 40.f, -15.f), STPoint3(15.f, 40.f, -15.f), STPoint3(5.f, 40.f, -5.f), STColor3f(0.2f,0.2f,0.2f));
-    rtAreaLight(STPoint3(-15.f, 40.f, 5.f), STPoint3(-5.f, 40.f, 5.f), STPoint3(-15.f, 40.f, 15.f), STColor3f(0.2f,0.2f,0.2f));
-    rtAreaLight(STPoint3(5.f, 40.f, 5.f), STPoint3(15.f, 40.f, 5.f), STPoint3(5.f, 40.f, 15.f), STColor3f(0.2f,0.2f,0.2f));
-    rtSpotLight(STPoint3(0.f, 40.f, 0.f), STVector3(0.f, -1.f, 0.f), 18, STColor3f(.5f,.5f,.5f));
+    // rtAreaLight(STPoint3(-15.f, 40.f, -15.f), STPoint3(-5.f, 40.f, -15.f), STPoint3(-15.f, 40.f, -5.f), STColor3f(0.2f,0.2f,0.2f));
+    // rtAreaLight(STPoint3(5.f, 40.f, -15.f), STPoint3(15.f, 40.f, -15.f), STPoint3(5.f, 40.f, -5.f), STColor3f(0.2f,0.2f,0.2f));
+    // rtAreaLight(STPoint3(-15.f, 40.f, 5.f), STPoint3(-5.f, 40.f, 5.f), STPoint3(-15.f, 40.f, 15.f), STColor3f(0.2f,0.2f,0.2f));
+    // rtAreaLight(STPoint3(5.f, 40.f, 5.f), STPoint3(15.f, 40.f, 5.f), STPoint3(5.f, 40.f, 15.f), STColor3f(0.2f,0.2f,0.2f));
+    rtSpotLight(STPoint3(0.f, 20.f, 0.f), STVector3(0.f, -1.f, 0.f), 60, STColor3f(1.f,1.f,1.f), 4.0, 1.0, 0.05, 0.0);
 
     ////car mesh
     rtPushMatrix();
@@ -162,7 +199,6 @@ void RayTracingScene::initializeUniformScene()
 {
     rtClear();
 
-
     // rtCamera(/*eye*/STPoint3(0.f,25.f,10.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,0.f,9.f),/*fov*/45.f,/*aspect*/1.f);
     rtCamera(/*eye*/STPoint3(0.f,18.f,40.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,0.f,0.f),/*fov*/45.f,/*aspect*/1.f);
     rtOutput(/*width*/512,/*height*/512,/*path*/"../UniformScene.png");
@@ -207,9 +243,6 @@ void RayTracingScene::initializeUniformScene()
     rtMaterial(mat_right_wall);
     addWall(STPoint3(10.f,0.f,-10.f),STVector3(0.f,20.f,0.f),STVector3(0.f,0.f,60.f),false);
 
-
-
-
     ////objects
     int counts[3]={16,1,48};
     float size[3]={16.f,3.f,48.f};
@@ -244,19 +277,12 @@ void RayTracingScene::initializeUniformScene()
     // int subdivision[3]={16,10,50};
     // uniform_grid=new UniformGrid(objects,scene_bounding_box,subdivision);
 
-
     //use acceleration structure
     ////aabb tree
     accel_structure=AABB_TREE;
     AABBTree* aabb_tree=new AABBTree(objects);
     aabb_trees.push_back(aabb_tree);
-
-
 }
-
-
-
-
 
 void RayTracingScene::addAreaLight(const STPoint3& min_corner, const STVector2& size, const STColor3f& color, const STColor3f& source_color, bool counterclockwise/*=true*/)
 {

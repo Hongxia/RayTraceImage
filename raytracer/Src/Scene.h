@@ -48,7 +48,7 @@ public:
     void rtTriangleMeshWithMaterialAndTexture(const std::string& file_name,const bool& counter_clockwise, const bool& smoothed_normal);    ////read geometry, material, and texture from the obj file and load them to ray tracer
     void rtTriangleMeshWithMotion(const std::string& file_name,const bool& counter_clockwise,const bool& smoothed_normal, double tx, double ty, double tz); 
     void rtAmbientLight(const STColor3f& col);
-    void rtSpotLight(const STPoint3& loc, const STVector3& _direction, const double _cutoff, const STColor3f& col);
+    void rtSpotLight(const STPoint3& loc, const STVector3& _direction, const double _cutoff, const STColor3f& col, const double _spot_exponent=0.0, const double _const_atten=1.0, const double _lin_atten=0.0, const double _quad_atten=0.0);
     void rtPointLight(const STPoint3& loc, const STColor3f& col);
     void rtDirectionalLight(const STVector3& dir, const STColor3f& col);
     void rtAreaLight(const STPoint3& v1, const STPoint3& v2, const STPoint3& v3, const STColor3f& col);

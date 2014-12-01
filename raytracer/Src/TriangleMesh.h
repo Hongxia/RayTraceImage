@@ -11,7 +11,7 @@ class TriangleMesh : public Shape {
 public:
 	TriangleMesh(STTriangleMesh& mesh_input,bool _counter_clockwise=true,bool calculate_smoothed_normal=false,
 		bool read_normal_from_obj=true,bool read_tex_coord_from_obj=true,bool _use_accel_structure=true)
-		:counter_clockwise(_counter_clockwise),mesh(mesh_input),use_accel_structure(false)
+		:counter_clockwise(_counter_clockwise),mesh(mesh_input),use_accel_structure(_use_accel_structure)
 	{
 		this->name = "triangle_mesh";
 		maxInt = 1;
