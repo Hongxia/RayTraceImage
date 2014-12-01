@@ -10,7 +10,7 @@ using namespace std;
 
 int main(int argc, const char * argv[])
 {
-    bool renderExample = false;
+    bool renderExample = true;
 
     if (renderExample)
     {
@@ -20,20 +20,22 @@ int main(int argc, const char * argv[])
         ////scenes for assignment 4
         // scene->initializeSceneBasicGeometry();
         scene->initializeSceneBasicLightingAndShading();
-        //scene->initializeSceneTransform();
+        // scene->initializeSceneTransform();
         // scene->initializeSceneObjMesh();
-        //scene->initializeSceneObjMesh2();
+        // scene->initializeSceneObjMesh2();
         //scene->initializeSceneTexture();
         // scene->initializeSceneTransparentObject();
         //scene->initializeSceneTransparentObject2();
 
         ////scenes for assignment 5
         //scene->initializeSceneAccelerationStructureGrid();
-        //scene->initializeSceneAccelerationStructureBVH();
+        // scene->initializeSceneAccelerationStructureBVH();
 
         ////scenes for assignment 6
         //scene->initializeSceneDepthOfField();
         //scene->initializeSceneParticipatingMedia();
+
+
 
         ////set rendering scene from script files
         //scene->initializeSceneFromScript("../Standard_Tests/RecursiveTest.txt");

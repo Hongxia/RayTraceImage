@@ -387,6 +387,12 @@ void Scene::rtSphere(const STPoint3& center, float radius)
 	objects.push_back(new SceneObject(new Sphere(center, radius), currMaterial, &matStack.back()));
 }
 
+void Scene::rtSphereWithMotion(const STPoint3& center, float radius, double tx, double ty, double tz) {
+	SceneObject *s = new SceneObject(new Sphere(center, radius), currMaterial, &matStack.back());
+	s->setTranslation(tx, ty, tz);
+	objects.push_back(s);
+}
+
 void Scene::rtTriangleLight(const STPoint3& v1, const STPoint3& v2, const STPoint3& v3)
 {
     SceneObject *obj = new SceneObject(new Triangle(v1, v2, v3), currMaterial, &matStack.back());
@@ -475,6 +481,23 @@ void Scene::rtTriangleMeshWithMaterialAndTexture(const std::string& file_name,co
         float shin=st_mesh->mShininess;
         Material* mat=new Material(amb, diff, spec, /*mirror*/STColor3f(),shin);
         objects.push_back(new SceneObject(new TriangleMesh(*meshes[i],counter_clockwise,smoothed_normal), mat, &matStack.back(), tex_index));
+    }
+}
+
+void Scene::rtTriangleMeshWithMotion(const std::string& file_name,const bool& counter_clockwise,const bool& smoothed_normal, double tx, double ty, double tz) {
+	std::vector<STTriangleMesh*> meshes;
+    STTriangleMesh::LoadObj(meshes,file_name);
+    for(int i = 0; i < (int)meshes.size(); i++) {
+        STTriangleMesh* st_mesh=meshes[i];
+        int tex_index=-1;if(st_mesh->mSurfaceColorImg)rtLoadTexture(st_mesh->mSurfaceColorImg,tex_index);
+        STColor3f amb(st_mesh->mMaterialAmbient[0],st_mesh->mMaterialAmbient[1],st_mesh->mMaterialAmbient[2]);
+        STColor3f diff(st_mesh->mMaterialDiffuse[0],st_mesh->mMaterialDiffuse[1],st_mesh->mMaterialDiffuse[2]);
+        STColor3f spec(st_mesh->mMaterialSpecular[0],st_mesh->mMaterialSpecular[1],st_mesh->mMaterialSpecular[2]);
+        float shin=st_mesh->mShininess;
+        Material* mat=new Material(amb, diff, spec, /*mirror*/STColor3f(),shin);
+        SceneObject* s = new SceneObject(new TriangleMesh(*meshes[i],counter_clockwise,smoothed_normal), mat, &matStack.back(), tex_index);
+        s->setTranslation(tx, ty, tz);
+        objects.push_back(s);
     }
 }
 

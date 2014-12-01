@@ -34,6 +34,7 @@ public:
     void rtScale(float sx, float sy, float sz);
     void rtTranslate(float tx, float ty, float tz);
     void rtSphere(const STPoint3& center, float radius);
+    void rtSphereWithMotion(const STPoint3& center, float radius, double tx, double ty, double tz);
     void rtTriangle(const STPoint3& v1, const STPoint3& v2, const STPoint3& v3);
     void rtTriangleLight(const STPoint3& v1, const STPoint3& v2, const STPoint3& v3);
 	void rtTriangle(const STPoint3& v1, const STPoint3& v2, const STPoint3& v3, const STPoint2& uv1, const STPoint2& uv2, const STPoint2& uv3);
@@ -45,6 +46,7 @@ public:
     void rtGroupObjects(int num);
     void rtTriangleMesh(const std::string& file_name,const bool& counter_clockwise,const bool& smoothed_normal);    ////read geometry from the obj file, and load the geometry, the current material and current texture to ray tracer
     void rtTriangleMeshWithMaterialAndTexture(const std::string& file_name,const bool& counter_clockwise, const bool& smoothed_normal);    ////read geometry, material, and texture from the obj file and load them to ray tracer
+    void rtTriangleMeshWithMotion(const std::string& file_name,const bool& counter_clockwise,const bool& smoothed_normal, double tx, double ty, double tz); 
     void rtAmbientLight(const STColor3f& col);
     void rtSpotLight(const STPoint3& loc, const STVector3& _direction, const double _cutoff, const STColor3f& col);
     void rtPointLight(const STPoint3& loc, const STColor3f& col);

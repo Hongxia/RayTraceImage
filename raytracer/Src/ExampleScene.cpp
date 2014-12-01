@@ -38,10 +38,10 @@ void ExampleScene::initializeSceneBasicLightingAndShading()
 
 	////global settings
 	rtCamera(/*eye*/STPoint3(0.f,0.f,10.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,0.f,0.f),/*fov*/45.f,/*aspect*/1.f);
-	rtOutput(/*width*/512,/*height*/512,/*path*/"../Standard_Tests/BasicLightingAndShading.png");
+	rtOutput(/*width*/512,/*height*/512,/*path*/"../Standard_Tests/BasicLightingAndShading1.png");
 	rtBounceDepth(1);
 	rtShadowBias(1e-4f);
-	rtSampleRate(4);
+	rtSampleRate(6);
 
 	////lighting:
 	rtAmbientLight(STColor3f(.1f,.1f,.1f));
@@ -54,12 +54,14 @@ void ExampleScene::initializeSceneBasicLightingAndShading()
 	////sphere
 	Material mat_sphere(STColor3f(0.f,0.f,1.f),STColor3f(0.f,0.f,.8f),STColor3f(1.f,1.f,1.f),STColor3f(0.f,0.f,0.f),30.f);
 	rtMaterial(mat_sphere);
-	rtSphere(STPoint3(-.5f,-.5f,1.f),1.f);
+	// rtSphere(STPoint3(-.5f,-.5f,1.f),1.f);
+	rtSphereWithMotion(STPoint3(-.5f,-.5f,1.f),1.f, 0.5, 0, 0);
 
 	////background wall
 	Material mat_ground(STColor3f(1.f,1.f,1.f),STColor3f(0.8f,0.8f,.8f),STColor3f(0.f,0.f,0.f),STColor3f(0.f,0.f,0.f),30.f);
 	rtMaterial(mat_ground);
 	addBackgroundWall(STPoint3(-8.f,-8.f,-1.f),STVector2(16.f,16.f));
+
 }
 
 void ExampleScene::initializeSceneTransform()
