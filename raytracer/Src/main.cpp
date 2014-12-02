@@ -68,10 +68,10 @@ int main(int argc, const char * argv[])
 
         //scenes for assignment 5
         // scene->initializeUniformScene();
-        scene->initializeClusteredScene();
+        // scene->initializeClusteredScene();
 
         //scenes for assignment 6
-        // scene->initializeFinalScene();
+        scene->initializeFinalScene();
 
         clock_t start, end;
         start=clock();
