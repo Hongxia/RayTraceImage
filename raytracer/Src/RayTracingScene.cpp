@@ -19,8 +19,8 @@ void RayTracingScene::initializeFinalScene()
 {
     rtClear();
 
-    rtCamera(/*eye*/STPoint3(0.f,45.f,0.f),/*up*/STVector3(0.f,0.f,-1.f),/*lookat*/STPoint3(0.f,0.f,0.f),/*fov*/45.f,/*aspect*/1.f);
-    // rtCamera(/*eye*/STPoint3(-18.f,5.f,16.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,0.f,0.f),/*fov*/45.f,/*aspect*/1.f);
+    // rtCamera(/*eye*/STPoint3(0.f,45.f,0.f),/*up*/STVector3(0.f,0.f,-1.f),/*lookat*/STPoint3(0.f,0.f,0.f),/*fov*/45.f,/*aspect*/1.f);
+    rtCamera(/*eye*/STPoint3(-18.f,5.f,16.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,0.f,0.f),/*fov*/45.f,/*aspect*/1.f);
     rtOutput(/*width*/512,/*height*/512,/*path*/"../Standard_Tests/RayTraceScene.png");
     rtBounceDepth(2);
     rtUseShadow(true);
@@ -31,7 +31,7 @@ void RayTracingScene::initializeFinalScene()
     // rtAmbientLight(STColor3f(1.f,1.f,1.f));
     // rtAreaLight(STPoint3(-10.f, 40.f, -10.f), STPoint3(10.f, 40.f, -10.f), STPoint3(-10.f, 40.f, 10.f), STColor3f(1.f,1.f,1.f));
     rtAreaLight(STPoint3(-10.f, 40.f, -10.f), STPoint3(10.f, 40.f, -10.f), STPoint3(-10.f, 40.f, 10.f), STColor3f(.4f,.4f,.4f));
-    // rtSpotLight(STPoint3(0.f, 40.f, 20.f), STVector3(0.f, -1.f, -0.5f), 18, STColor3f(.5f,.5f,.5f), 0.0);
+    rtSpotLight(STPoint3(0.f, 40.f, 0.f), STVector3(0.f, -1.f, 0.f), 60.0, STColor3f(.5f,.5f,.5f), 4.0, 1.0, 0.05, 0.0);
     // rtSpotLight(STPoint3(-16.f, 40.f, -20.f), STVector3(0.f, -1.f, 0.5f), 18, STColor3f(.5f,.5f,.5f), 0.0);
     // rtSpotLight(STPoint3(-40.f, 40.f, 0.f), STVector3(0.6f, -1.f, 0.f), 18, STColor3f(.5f,.5f,.5f), 0.0);
 
@@ -40,22 +40,23 @@ void RayTracingScene::initializeFinalScene()
     rtScale(8.f,8.f,8.f);
 
     // Ground
-    rtTriangleMeshWithMaterialAndTexture("../Standard_Tests/ground/ground.obj",true,false);
-    // rtTriangleMeshWithMotion("../Standard_Tests/ground/car.obj",true,false,0,0,-0.25);
-    // rtTriangleMeshWithMaterialAndTexture("../Standard_Tests/ground/car.obj",true,false);
-    // rtTriangleMeshWithMotion("../Standard_Tests/ground/car1.obj",true,false,0,0,-0.35);
-    // rtTriangleMeshWithMaterialAndTexture("../Standard_Tests/ground/car1.obj",true,false);
-
+    rtTriangleMeshWithMaterialAndTexture("../Standard_Tests/meshes/scene.obj",true,false);
+    rtTriangleMeshWithMaterialAndTexture("../Standard_Tests/meshes/car.obj",true,false);
+    
     // Water on the ground
+    // Needs to fix the mat
     Material mat_mirror(/*ambient*/STColor3f(1.f,.75f,.75f),/*diffuse*/STColor3f(1.f,.75f,.75f),/*specular*/STColor3f(1.f,1.f,1.f),/*mirror*/STColor3f(.75f,.75f,.75f),/*shiness*/50.f);
-    // Material mat_mirror(STColor3f(1.f, 1.f, 1.f), STColor3f(0.f, 0.f, 0.f), STColor3f(0.f, 0.f, 0.f), STColor3f(.9f, .9f, .9f), 0.f);
     rtMaterial(mat_mirror);
-    rtTriangleMesh("../Standard_Tests/ground/water.obj",true,false);
+    rtTriangleMesh("../Standard_Tests/meshes/water.obj",true,false);
     rtPopMatrix();
 
-    Material mat_ceiling(STColor3f(1.f,0.f,0.f),STColor3f(1.f,0.f,0.f),STColor3f(),STColor3f(),30.f);
-    rtMaterial(mat_ceiling);
-    addGround(STPoint3(-10.f,50.f,-10.f),STVector2(20.f,20.f),false);
+    // Glass
+    // Needs to fix the mat
+    Material mat_glass(/*ambient*/STColor3f(1.f,.75f,.75f),/*diffuse*/STColor3f(1.f,.75f,.75f),/*specular*/STColor3f(1.f,1.f,1.f),/*mirror*/STColor3f(.75f,.75f,.75f),/*shiness*/50.f);
+    rtMaterial(mat_glass);
+    rtTriangleMesh("../Standard_Tests/meshes/glass.obj",true,false);
+    rtTriangleMesh("../Standard_Tests/meshes/car_glass.obj",true,false);
+    rtPopMatrix();
 }
 
 void RayTracingScene::initializeClusteredScene()
