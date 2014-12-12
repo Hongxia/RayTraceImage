@@ -33,6 +33,7 @@ public:
     void rtRotate(float rx, float ry, float rz);
     void rtScale(float sx, float sy, float sz);
     void rtTranslate(float tx, float ty, float tz);
+    void rtInsideSphere(const STPoint3& center, float radius);
     void rtSphere(const STPoint3& center, float radius);
     void rtSphereWithMotion(const STPoint3& center, float radius, double tx, double ty, double tz);
     void rtTriangle(const STPoint3& v1, const STPoint3& v2, const STPoint3& v3);

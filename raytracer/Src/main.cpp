@@ -19,7 +19,7 @@ int main(int argc, const char * argv[])
         ////or set rendering scene from code
         ////scenes for assignment 4
         // scene->initializeSceneBasicGeometry();
-        scene->initializeSceneBasicLightingAndShading();
+        // scene->initializeSceneBasicLightingAndShading();
         // scene->initializeSceneTransform();
         // scene->initializeSceneObjMesh();
         // scene->initializeSceneObjMesh2();
@@ -33,7 +33,7 @@ int main(int argc, const char * argv[])
 
         ////scenes for assignment 6
         //scene->initializeSceneDepthOfField();
-        //scene->initializeSceneParticipatingMedia();
+        scene->initializeSceneParticipatingMedia();
 
 
 

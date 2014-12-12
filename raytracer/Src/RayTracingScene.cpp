@@ -21,23 +21,25 @@ void RayTracingScene::initializeFinalScene()
     rtClear();
 
     // rtCamera(/*eye*/STPoint3(-20.f,12.f,29.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,40.f,0.f),/*fov*/45.f,/*aspect*/1.f);
-    rtCamera(/*eye*/STPoint3(-20.f,12.f,29.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,0.f,0.f),/*fov*/45.f,/*aspect*/1.f);
+    rtCamera(/*eye*/STPoint3(-15.f,8.f,29.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,5.f,0.f),/*fov*/45.f,/*aspect*/1.f);
     rtOutput(/*width*/512,/*height*/512,/*path*/"../Standard_Tests/RayTraceScene.png");
-    rtBounceDepth(3);
+    rtBounceDepth(2);
     rtUseShadow(true);
     rtSetApeture(16);
     rtShadowBias(1e-4f);
-    rtSampleRate(2);
+    rtSampleRate(1);
+
+    
 
     // rtAmbientLight(STColor3f(1.f,1.f,1.f));
-    // rtAreaLight(STPoint3(-10.f, 35.f, -10.f), STPoint3(10.f, 35.f, -10.f), STPoint3(-10.f, 35.f, 10.f), STColor3f(1.f,1.f,1.f));
-    // rtAreaLight(STPoint3(-10.f, 40.f, -10.f), STPoint3(10.f, 40.f, -10.f), STPoint3(-10.f, 40.f, 10.f), STColor3f(1.4f,1.4f,1.4f));
+    rtAreaLight(STPoint3(-10.f, 30.f, -10.f), STPoint3(10.f, 30.f, -10.f), STPoint3(-10.f, 30.f, 10.f), STColor3f(1.f,1.f,1.f));
+    // rtAreaLight(STPoint3(-10.f, 32.f, -10.f), STPoint3(10.f, 40.f, -10.f), STPoint3(-10.f, 40.f, 10.f), STColor3f(1.4f,1.4f,1.4f));
     // Material mat_plat(/*ambient*/STColor3f(1.f, 1.f, 1.f),/*diffuse*/color_O(),/*spec*/STColor3f(0.f,0.f,0.f),/*mirror*/STColor3f(0.f,0.f,0.f),/*shiness*/0.f,/*refr*/STColor3f(0.f,0.f,0.f),/*sn*/1.5f);
     // rtMaterial(mat_plat);
-    rtSpotLight(STPoint3(-10.f, 17.5f, 0.f), STVector3(0.f, -1.f, 0.f), 40.0, STColor3f(7.5f,6.5f,5.5f), 3.5, 1.8, 0.05, 0.0);
-    rtSpotLight(STPoint3(10.f, 17.f, 0.f), STVector3(0.f, -1.f, 0.f), 40.0, STColor3f(7.5f,6.5f,5.5f), 3.5, 1.8, 0.05, 0.0);
-    rtSpotLight(STPoint3(-10.f, 17.f, -33.f), STVector3(0.f, -1.f, 0.f), 40.0, STColor3f(7.5f,6.5f,5.5f), 3.5, 1.8, 0.05, 0.0);
-    rtSpotLight(STPoint3(10.f, 17.f, -33.f), STVector3(0.f, -1.f, 0.f), 40.0, STColor3f(7.5f,6.5f,5.5f), 3.5, 1.8, 0.05, 0.0);
+    rtSpotLight(STPoint3(-10.f, 17.5f, 0.f), STVector3(0.f, -1.f, 0.f), 40.0, STColor3f(7.5f,6.5f,5.5f), 3.5, 1.5, 0.05, 0.02);
+    rtSpotLight(STPoint3(10.f, 17.f, 0.f), STVector3(0.f, -1.f, 0.f), 40.0, STColor3f(7.5f,6.5f,5.5f), 3.5, 1.8, 0.05, 0.02);
+    rtSpotLight(STPoint3(-10.f, 17.f, -33.f), STVector3(0.f, -1.f, 0.f), 40.0, STColor3f(7.5f,6.5f,5.5f), 3.5, 1.8, 0.05, 0.02);
+    rtSpotLight(STPoint3(10.f, 17.f, -33.f), STVector3(0.f, -1.f, 0.f), 40.0, STColor3f(7.5f,6.5f,5.5f), 3.5, 1.8, 0.05, 0.02);
 
     ////scene mesh
     rtPushMatrix();
@@ -48,12 +50,12 @@ void RayTracingScene::initializeFinalScene()
     rtTriangleMeshWithMaterialAndTexture("../Standard_Tests/meshes/car.obj",true,false);
     // rtTriangleMeshWithMotion("../Standard_Tests/meshes/car.obj",true, false, 0,0,-0.5);
     // Water on the ground
-    Material mat_mirror(/*ambient*/STColor3f(),/*diffuse*/STColor3f(),/*spec*/STColor3f(0.f,0.f,0.f),/*mirror*/STColor3f(0.f,0.f,0.f),/*shiness*/0.f,/*refr*/STColor3f(.9f,.3f,.1f),/*sn*/1.3f);
+    Material mat_mirror(/*ambient*/STColor3f(),/*diffuse*/STColor3f(),/*spec*/STColor3f(0.f,0.f,0.f),/*mirror*/STColor3f(0.f,0.f,0.f),/*shiness*/0.f,/*refr*/color_G(),/*sn*/1.3f);
     rtMaterial(mat_mirror);
     rtTriangleMesh("../Standard_Tests/meshes/water.obj",true,false);
 
     // Glass
-    Material mat_glass(/*ambient*/STColor3f(),/*diffuse*/STColor3f(),/*spec*/STColor3f(0.f,0.f,0.f),/*mirror*/STColor3f(0.f,0.f,0.f),/*shiness*/0.f,/*refr*/STColor3f(.9f,.3f,.1f),/*sn*/1.3f);
+    Material mat_glass(/*ambient*/STColor3f(),/*diffuse*/STColor3f(),/*spec*/STColor3f(0.f,0.f,0.f),/*mirror*/STColor3f(0.f,0.f,0.f),/*shiness*/0.f,/*refr*/color_G(),/*sn*/1.3f);
     rtMaterial(mat_glass);
     rtTriangleMesh("../Standard_Tests/meshes/glass.obj",true,false);
     rtTriangleMesh("../Standard_Tests/meshes/car_glass.obj",true,false);
@@ -63,17 +65,17 @@ void RayTracingScene::initializeFinalScene()
     // Material mat_sky(/*ambient*/STColor3f(72.f,48.f,120.f),/*diffuse*/STColor3f(72.f,48.f,120.f),/*specular*/STColor3f(0.0f,0.0f,0.0f),/*mirror*/STColor3f(0.0f,0.0f,0.0f),/*shiness*/0.f);
     rtMaterial(mat_sky);
     ////sky
-    addGround(STPoint3(-80.f, 40.f, -80.f),STVector2(160.f, 160.f),false);
+    addGround(STPoint3(-80.f, 35.f, -80.f),STVector2(160.f, 160.f),false);
     //below ground
     addGround(STPoint3(-80.f, -5.f, -80.f),STVector2(160.f, 160.f),true);
     //background wall
-    addBackgroundWall(STPoint3(-40.f,-10.f,-50.f),STVector2(80.f,50.f),true);
+    // addBackgroundWall(STPoint3(-40.f,-10.f,-50.f),STVector2(80.f,50.f),true);
     ////forward wall
     addBackgroundWall(STPoint3(-40.f,-10.f,50.f),STVector2(80.f,50.f),false);
     ////left wall
     addWall(STPoint3(-30.f,-10.f,-50.f),STVector3(0.f,50.f,0.f),STVector3(0.f,0.f,160.f),true);
     ////right wall
-    addWall(STPoint3(30.f,-10.f,-50.f),STVector3(0.f,50.f,0.f),STVector3(0.f,0.f,160.f),false);
+    // addWall(STPoint3(30.f,-10.f,-50.f),STVector3(0.f,50.f,0.f),STVector3(0.f,0.f,160.f),false);
 }
 
 void RayTracingScene::initializeClusteredScene()
@@ -222,7 +224,7 @@ void RayTracingScene::initializeUniformScene()
     rtClear();
 
     // rtCamera(/*eye*/STPoint3(0.f,25.f,10.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,0.f,9.f),/*fov*/45.f,/*aspect*/1.f);
-    rtCamera(/*eye*/STPoint3(0.f,18.f,40.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,0.f,0.f),/*fov*/45.f,/*aspect*/1.f);
+    rtCamera(/*eye*/STPoint3(0.f,18.f,35.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,0.f,0.f),/*fov*/45.f,/*aspect*/1.f);
     rtOutput(/*width*/512,/*height*/512,/*path*/"../UniformScene.png");
     rtBounceDepth(8);
     rtBounceDepth(8);

@@ -111,7 +111,7 @@ STColor3f Scene::TraceRay(const Ray &ray, int bounce) {
     float cos_theta_1 = STVector3::Dot(inter->normal, d);
 
 
-    ////participating media
+	////participating media
     if(object->material.isParticipatingMedia()) {
         if(cos_theta_1 > 0) { //exiting participating media
             refracted = new Ray(inter->point, ray.d, shadowBias);
@@ -124,7 +124,21 @@ STColor3f Scene::TraceRay(const Ray &ray, int bounce) {
             refracted = new Ray(inter->point, ray.d, shadowBias);
             STColor3f color = TraceRay(*refracted, bounce + 1);
             //calculate attenuation based on distance ray traveled through medium
-            float atten = object->material.participatingMediaAttenuation(refracted->e, refracted->at(inter->t), *(object->aabb));
+            
+            //<fixed version>
+            SceneObject* dummy;
+            Intersection* inter2 = Intersect(*refracted, dummy);
+            float atten = 1.f;
+            if(inter2!=0) {
+                atten = object->material.participatingMediaAttenuation(refracted->e, refracted->at(inter2->t), *(object->aabb));
+                delete inter2;
+            }
+            //</fixed version>
+
+            //<broken version>
+            //float atten = object->material.participatingMediaAttenuation(refracted->e, refracted->at(inter->t), *(object->aabb));
+            //</broken version>
+
             STColor3f atten_color(atten, atten, atten);
             STColor3f result = color * atten_color;
             delete refracted;
@@ -132,6 +146,8 @@ STColor3f Scene::TraceRay(const Ray &ray, int bounce) {
             return result;
         }
     }
+
+    
 
 	////from inside to outside, n1>n2
     if (cos_theta_1 > 0 && !object->material.isOpaque()) {
@@ -385,6 +401,11 @@ void Scene::rtTranslate(float tx, float ty, float tz)
 void Scene::rtSphere(const STPoint3& center, float radius)
 {
 	objects.push_back(new SceneObject(new Sphere(center, radius), currMaterial, &matStack.back()));
+}
+
+void Scene::rtInsideSphere(const STPoint3& center, float radius)
+{
+	objects.push_back(new SceneObject(new Sphere(center, radius, true), currMaterial, &matStack.back()));
 }
 
 void Scene::rtSphereWithMotion(const STPoint3& center, float radius, double tx, double ty, double tz) {
