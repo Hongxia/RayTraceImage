@@ -68,6 +68,8 @@ public:
 	void rtUnbindTexture(){currTexIndex=-1;}
 
 protected:
+    STColor3f mistColor;
+    STColor3f getMistColor(STColor3f originalResult, Intersection* inter = NULL);
     std::vector<STTransform4> matStack;
     Material* currMaterial;
 	int currTexIndex;

@@ -7,6 +7,7 @@ Scene::Scene()
     :currMaterial(NULL),currTexIndex(-1),use_shadow(true),use_transparent_shadow(false),attenuation_coefficient(1.f),camera(NULL),accel_structure(NONE),uniform_grid(NULL)
 {
     rtSampleRate(1);
+    mistColor = STColor3f(1.f, 1.f, 1.f);
 }
 
 Scene::~Scene()
@@ -83,22 +84,22 @@ void Scene::Render() {
 
 STColor3f Scene::TraceRay(const Ray &ray, int bounce) {
     if (bounce == bounceDepth){
-		return STColor3f();
+		return getMistColor(STColor3f());
 	}
     SceneObject *object;
     Intersection* inter = Intersect(ray, object);
     if (!inter){
-		return STColor3f();
+		return getMistColor(STColor3f());
 	}
     
     if (object->name == "light") {
-        delete inter;
-        return object->material.diffuse;
+        // delete inter;
+        return getMistColor(object->material.diffuse, inter);
     }
 
     if (object->shape->name == "light") {
-        delete inter;
-        return object->material.diffuse;
+        // delete inter;
+        return getMistColor(object->material.diffuse, inter);
     }
     
     STVector3 d = ray.d;
@@ -143,11 +144,11 @@ STColor3f Scene::TraceRay(const Ray &ray, int bounce) {
             STColor3f result = color * atten_color;
             delete refracted;
             delete reflected;
-            return result;
+            return result; 
         }
     }
 
-    
+
 
 	////from inside to outside, n1>n2
     if (cos_theta_1 > 0 && !object->material.isOpaque()) {
@@ -165,14 +166,14 @@ STColor3f Scene::TraceRay(const Ray &ray, int bounce) {
             STColor3f result = atten * (reflected_ray_color * refl + refracted_ray_color * (1 - refl));
             delete reflected;
             delete refracted;
-            delete inter;
-            return result;
+            // delete inter;
+            return getMistColor(result, inter); //todo
         } else {
 			STColor3f reflected_ray_color = TraceRay(*reflected, bounce + 1);
             STColor3f result = atten * reflected_ray_color;
 			delete reflected;
-            delete inter;
-            return result;
+            // delete inter;
+            return getMistColor(result, inter);  //todo
         }
     }
     
@@ -192,15 +193,15 @@ STColor3f Scene::TraceRay(const Ray &ray, int bounce) {
 			STColor3f reflected_ray_color = TraceRay(*reflected, bounce + 1);
 			STColor3f refracted_ray_color = TraceRay(*refracted, bounce + 1);
             STColor3f result = reflected_ray_color * refl + refracted_ray_color * (1 - refl);
-            delete inter;
+            //delete inter;
             delete reflected;
             delete refracted;
-            return result;
+            return getMistColor(result, inter);  //todo
         } else {
             STColor3f result = TraceRay(*reflected, bounce + 1);
-            delete inter;
+            //delete inter;
             delete reflected;
-            return result;
+            return getMistColor(result, inter);  //todo
         }
     }
 
@@ -215,10 +216,26 @@ STColor3f Scene::TraceRay(const Ray &ray, int bounce) {
 		STColor3f tex_color=textureColor(object->texture_index,inter->uv);
 		result*=tex_color;
 	}
-	delete inter;
+	//delete inter;
     delete reflected;
     if (refracted) delete refracted;
-    return result;
+    return getMistColor(result, inter);  //todo
+}
+
+
+STColor3f Scene::getMistColor(STColor3f originalResult, Intersection* inter) {
+	//return originalResult;  //No Mist
+	float dist;
+	float mistMaxDistance = 150; //Interpolates with this distance
+	if (!inter) {
+		dist = .1*mistMaxDistance;
+		return mistColor;
+	} else {
+		dist = STPoint3::Dist(inter->point, camera->getEye());
+		delete inter;
+	}
+    float origColor = std::min(((mistMaxDistance - dist)/mistMaxDistance), 1.0f);
+	return originalResult*origColor + mistColor*(1-origColor);
 }
 
 ////find the visible lights from the intersection

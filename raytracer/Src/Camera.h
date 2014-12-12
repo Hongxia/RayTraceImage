@@ -17,6 +17,7 @@ public:
     Ray* generateRay(float u, float v, float bias = 0.) const;
     float getFocalRatio(const STPoint3& f);
     STPoint3 pointOnPlane(float u, float v) const;
+    STPoint3 getEye();
 private:
     STPoint3 eye;
     STVector3 up;

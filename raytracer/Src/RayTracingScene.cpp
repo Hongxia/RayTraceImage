@@ -23,16 +23,16 @@ void RayTracingScene::initializeFinalScene()
     // rtCamera(/*eye*/STPoint3(-20.f,12.f,29.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,40.f,0.f),/*fov*/45.f,/*aspect*/1.f);
     rtCamera(/*eye*/STPoint3(-15.f,8.f,29.f),/*up*/STVector3(0.f,1.f,0.f),/*lookat*/STPoint3(0.f,5.f,0.f),/*fov*/45.f,/*aspect*/1.f);
     rtOutput(/*width*/512,/*height*/512,/*path*/"../Standard_Tests/RayTraceScene.png");
-    rtBounceDepth(2);
+    rtBounceDepth(3);
     rtUseShadow(true);
     rtSetApeture(16);
     rtShadowBias(1e-4f);
-    rtSampleRate(1);
+    rtSampleRate(4);
 
     
 
     // rtAmbientLight(STColor3f(1.f,1.f,1.f));
-    rtAreaLight(STPoint3(-10.f, 30.f, -10.f), STPoint3(10.f, 30.f, -10.f), STPoint3(-10.f, 30.f, 10.f), STColor3f(1.f,1.f,1.f));
+    // rtAreaLight(STPoint3(-10.f, 30.f, -10.f), STPoint3(10.f, 30.f, -10.f), STPoint3(-10.f, 30.f, 10.f), STColor3f(1.f,1.f,1.f));
     // rtAreaLight(STPoint3(-10.f, 32.f, -10.f), STPoint3(10.f, 40.f, -10.f), STPoint3(-10.f, 40.f, 10.f), STColor3f(1.4f,1.4f,1.4f));
     // Material mat_plat(/*ambient*/STColor3f(1.f, 1.f, 1.f),/*diffuse*/color_O(),/*spec*/STColor3f(0.f,0.f,0.f),/*mirror*/STColor3f(0.f,0.f,0.f),/*shiness*/0.f,/*refr*/STColor3f(0.f,0.f,0.f),/*sn*/1.5f);
     // rtMaterial(mat_plat);

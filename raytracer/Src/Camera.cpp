@@ -37,3 +37,7 @@ Ray* Camera::generateRay(float u, float v, float bias) const {
 float Camera::getFocalRatio(const STPoint3 &f) {
     return STVector3::Dot(f - eye, lookAt - eye) / (lookAt - eye).LengthSq();
 }
+
+STPoint3 Camera::getEye() {
+    return eye;
+}
