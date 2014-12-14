@@ -1,0 +1,20 @@
+Our raytraced image presents a night street scene that features an Audi R8 with glossy red paint. Since our last presentation, we've made improvements to address comments & feedback from the staff. We would like to highlight some of the techniques that we applied to our image:
+
+1) Realistic Pebble Road: 
+  In order to make the street scene extremely realistic, we created a pebble road and curbs on both sides. We applied displacement mapping to the road in order to simulate realistic complexity in details. The geometry of our displaced road also allows us to overlay a plane with reflective material to represent water trapped in the lower parts of the road. 
+
+2)  R8 Headlight & Glossy Paint:  
+  Ed suggests these improvements. The glossy paint is achieved by exporting the exterior parts of the R8 mesh separately and rendering that part using a reflective material. The headlights are a little trickier: we first exported the headlight glass shields and the headlights themselves separately. The glass is rendered in transparant material and the headlights are rendered using an custom rtTriangleMesh() method that adds a "name" (in this case "name" is "car-light") to the SceneObject. Then we modified the TraceRay() method so that it returns the headlight color directly if the intersection is with an object whose name is "car-light".
+  We also used similar techniques for the street lights.
+ 
+3) Skydome:
+  Using Blender we created a semi-sphere skydome that is applied with a night scene texture. This allows us to present nice looking reflections on water and the car.
+
+4) Mist:
+  Another comment from the staff was that the road should not end abruptly. In order to address this issue, we extended our road mesh, and in the meantime, created a mist effect so that the visual is blocked by fog at some point. The mist also adds to the isolated, cold-night  atmosphere to our image.
+  To create mist, we modified the RayTrace() method so that it returns a interpolation between the "mist color" and the original color of the intersection. The further away an intersection is, the closer to "mist color" the return value will be.
+
+5) Spotlights:
+  One of the lighting tools we liked a lot in Scanline image is the spotlight, so we created our own spotlight for our raytracing image. Our spotlight extends the PointLight class and supports all the variables supported the openGL spotlight: cutoff, attentuation, and etc. We use our spotlight extensively in this image: the street lamps uses spotlights with softened edges, the car uses spotlights with harder edges as its headlight.
+
+Hongxia Zhong (hzhong62) & Jess Peterson (jessp)

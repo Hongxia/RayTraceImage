@@ -45,7 +45,7 @@ public:
     void rtParticipatingMedia(const STPoint3& center,const STVector3& size,const std::string& file_name);
     void rtCompound(char c);
     void rtGroupObjects(int num);
-    void rtTriangleMesh(const std::string& file_name,const bool& counter_clockwise,const bool& smoothed_normal);    ////read geometry from the obj file, and load the geometry, the current material and current texture to ray tracer
+    void rtTriangleMesh(const std::string& file_name,const bool& counter_clockwise,const bool& smoothed_normal,const std::string mesh_name="");    ////read geometry from the obj file, and load the geometry, the current material and current texture to ray tracer
     void rtTriangleMeshWithMaterialAndTexture(const std::string& file_name,const bool& counter_clockwise, const bool& smoothed_normal);    ////read geometry, material, and texture from the obj file and load them to ray tracer
     void rtTriangleMeshWithMotion(const std::string& file_name,const bool& counter_clockwise,const bool& smoothed_normal, double tx, double ty, double tz); 
     void rtAmbientLight(const STColor3f& col);

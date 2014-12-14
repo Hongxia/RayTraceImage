@@ -94,7 +94,27 @@ STColor3f Scene::TraceRay(const Ray &ray, int bounce) {
     
     if (object->name == "light") {
         // delete inter;
-        return getMistColor(object->material.diffuse, inter);
+        // return getMistColor(object->material.diffuse, inter);
+        delete inter;
+        return STColor3f(1.f, 1.f, 1.f);
+    }
+    if (object->name == "car-light") {
+        // delete inter;
+        // return getMistColor(object->material.diffuse, inter);
+        delete inter;
+        return STColor3f(2.f, 1.9f, 1.76f);
+    }
+    if (object->name == "car-light-2") {
+        // delete inter;
+        // return getMistColor(object->material.diffuse, inter);
+        delete inter;
+        return STColor3f(1.f, 0.95f, 0.88f);
+    }
+    if (object->name == "lamp-light") {
+        // delete inter;
+        // return getMistColor(object->material.diffuse, inter);
+        delete inter;
+        return STColor3f(2.f, 1.44f, 0.6f);
     }
 
     if (object->shape->name == "light") {
@@ -224,18 +244,23 @@ STColor3f Scene::TraceRay(const Ray &ray, int bounce) {
 
 
 STColor3f Scene::getMistColor(STColor3f originalResult, Intersection* inter) {
-	//return originalResult;  //No Mist
-	float dist;
-	float mistMaxDistance = 150; //Interpolates with this distance
-	if (!inter) {
-		dist = .1*mistMaxDistance;
-		return mistColor;
-	} else {
-		dist = STPoint3::Dist(inter->point, camera->getEye());
-		delete inter;
-	}
-    float origColor = std::min(((mistMaxDistance - dist)/mistMaxDistance), 1.0f);
-	return originalResult*origColor + mistColor*(1-origColor);
+	return originalResult;  //No Mist
+	// float dist;
+	// // float mistMaxDistance = 150; //Interpolates with this distance
+ //    float mistMinDistance = 25;
+ //    float mistMaxDistance = 250; //Interpolates with this distance
+	// if (!inter) {
+	// 	dist = 0.1*mistMaxDistance;
+	// 	return mistColor;
+	// } else {
+	// 	dist = STPoint3::Dist(inter->point, camera->getEye());
+ //        if (dist <= mistMinDistance) {
+ //            dist = 0;
+ //        }
+	// 	delete inter;
+ //    }
+ //    float origColor = std::min(((mistMaxDistance - dist)/mistMaxDistance), 1.0f);
+	// return originalResult*origColor + mistColor*(1-origColor);
 }
 
 ////find the visible lights from the intersection
@@ -496,12 +521,14 @@ void Scene::rtGroupObjects(int num) {
 	objects.push_back(boundVol);
 }
 
-void Scene::rtTriangleMesh(const std::string& file_name,const bool& counter_clockwise,const bool& smoothed_normal)
+void Scene::rtTriangleMesh(const std::string& file_name,const bool& counter_clockwise,const bool& smoothed_normal,const std::string mesh_name)
 {
     std::vector<STTriangleMesh*> meshes;
     STTriangleMesh::LoadObj(meshes,file_name);
     for(int i = 0; i < (int)meshes.size(); i++) {
-        objects.push_back(new SceneObject(new TriangleMesh(*meshes[i],counter_clockwise,smoothed_normal), currMaterial, &matStack.back(), currTexIndex));
+        SceneObject *obj = new SceneObject(new TriangleMesh(*meshes[i],counter_clockwise,smoothed_normal), currMaterial, &matStack.back(), currTexIndex);
+        obj->name = mesh_name;
+        objects.push_back(obj);
     }
 	//objects.push_back(new SceneObject(new TriangleMesh(file_name,counter_clockwise,smoothed_normal), currMaterial, &matStack.back(), currTexIndex));
 }
