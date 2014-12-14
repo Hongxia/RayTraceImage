@@ -40,7 +40,7 @@ void RayTracingScene::initializeFinalScene()
     rtUseShadow(true);
     rtSetApeture(16);
     rtShadowBias(1e-4f);
-    rtSampleRate(1);
+    rtSampleRate(12);
 
     /* Ambient Lighting */
     rtAmbientLight(STColor3f(1.f,1.f,1.f));
@@ -103,6 +103,11 @@ void RayTracingScene::initializeFinalScene()
     rtMaterial(mat_lamp_glass);
     rtTriangleMesh("../Standard_Tests/meshes/glass.obj",true,false);
     rtPopMatrix();
+
+    //aabb tree
+    accel_structure=AABB_TREE;
+    AABBTree* aabb_tree=new AABBTree(objects);
+    aabb_trees.push_back(aabb_tree);
 }
 
 void RayTracingScene::initializeClusteredScene()
